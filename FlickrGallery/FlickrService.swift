@@ -3,10 +3,22 @@ import Foundation
 class FlickrService {
 
     // Singleton instance
-    static let sharedInstance = FlickrService()
+    static let sharedInstance = try! FlickrService()
     
     // Private initializer
-    private init() {
+    private init() throws {
+        // Set config
+        guard let configPath = Bundle.main.path(forResource: "Config", ofType: "plist"),
+            let config = NSDictionary(contentsOfFile: configPath) as? [String: Any] else {
+            throw FlickrServiceError.configReading
+        }
+        // Flickr API key
+        // To change every 24H
+        apiKey = config["Flickr API key"] as! String
+        // Flickr response format
+        responseFormat = config["Flickr response format"] as! String
+        // Flickr images list url pattern
+        flickrResultsByTagsPageUrlPattern = config["Flickr URL pattern"] as! String
     }
     
     // Instance getter
@@ -14,18 +26,13 @@ class FlickrService {
         return FlickrService.sharedInstance
     }
     
+    let apiKey: String
+    let responseFormat: String
+    let flickrResultsByTagsPageUrlPattern: String
+    
     // Pages cache
     var pendingPageDownloads: [Int: Bool] = [:]
     var completionHandlers: [Int: [() -> Void]] = [:]
-
-    // Flickr API key
-    static let apiKey = "68f9a3498ff770330ef51429836ba68a" // To change every 24H
-    
-    // Flickr response format
-    static let responseFormat = "json"
-    
-    // Flickr images list url pattern
-    static let flickrResultsByTagsPageUrlPattern = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&page=%d&per_page=%d&extras=original_format&format=%@&nojsoncallback=1"
     
     // Async queues
     let downloadResultsListQueue = DispatchQueue(label: "com.FlickrGallery.httpRequestQueue.getFlickrResultsByTagsPage", qos: .background)
@@ -58,7 +65,7 @@ class FlickrService {
         let tagsParameters = imagesTags.joined(separator: ",")
         
         // Prepare URL
-        let flickrResultsByTagsPageUrl =  String(format: FlickrService.flickrResultsByTagsPageUrlPattern, FlickrService.apiKey, tagsParameters, page, resultsPerPages, FlickrService.responseFormat)
+        let flickrResultsByTagsPageUrl =  String(format: flickrResultsByTagsPageUrlPattern, apiKey, tagsParameters, page, resultsPerPages, responseFormat)
  
         // Prepare async queue
         downloadResultsListQueue.async {
@@ -90,7 +97,7 @@ class FlickrService {
         let tagsParameters = imagesTags.joined(separator: ",")
         
         // Prepare URL
-        let flickrResultsByTagsPageUrl =  String(format: FlickrService.flickrResultsByTagsPageUrlPattern, FlickrService.apiKey, tagsParameters, page, resultsPerPages, FlickrService.responseFormat)
+        let flickrResultsByTagsPageUrl =  String(format: flickrResultsByTagsPageUrlPattern, apiKey, tagsParameters, page, resultsPerPages, responseFormat)
         
         // Prepare prioritized async queue
         downloadPrioritizedResultsListQueue.async {

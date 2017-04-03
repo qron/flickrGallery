@@ -22,6 +22,7 @@
 		8C6132AE1E923972009DD2F1 /* ThumbnailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6132A51E923972009DD2F1 /* ThumbnailCollectionViewCell.swift */; };
 		8C6132B81E923AC0009DD2F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C6132B61E923AC0009DD2F1 /* Main.storyboard */; };
 		8C6132BB1E923ADC009DD2F1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C6132B91E923ADC009DD2F1 /* LaunchScreen.storyboard */; };
+		8C6132C11E924D6C009DD2F1 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C6132C01E924D6C009DD2F1 /* Config.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		8C6132A51E923972009DD2F1 /* ThumbnailCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailCollectionViewCell.swift; sourceTree = "<group>"; };
 		8C6132B71E923AC0009DD2F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8C6132BA1E923ADC009DD2F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8C6132C01E924D6C009DD2F1 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				8C6132BC1E92493D009DD2F1 /* Search */,
 				8C6132B61E923AC0009DD2F1 /* Main.storyboard */,
 				8C6132B91E923ADC009DD2F1 /* LaunchScreen.storyboard */,
+				8C6132C01E924D6C009DD2F1 /* Config.plist */,
 				8C61326F1E92387D009DD2F1 /* AppDelegate.swift */,
 				8C6132761E92387D009DD2F1 /* Assets.xcassets */,
 				8C61327B1E92387D009DD2F1 /* Info.plist */,
@@ -288,6 +291,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C6132C11E924D6C009DD2F1 /* Config.plist in Resources */,
 				8C6132771E92387D009DD2F1 /* Assets.xcassets in Resources */,
 				8C6132BB1E923ADC009DD2F1 /* LaunchScreen.storyboard in Resources */,
 				8C6132B81E923AC0009DD2F1 /* Main.storyboard in Resources */,
