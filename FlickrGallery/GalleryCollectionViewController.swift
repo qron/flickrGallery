@@ -50,12 +50,22 @@ class GalleryCollectionViewController: UICollectionViewController {
         
         // Thumbnail cell settings
         
+        // Thumbnail shadow
+        thumbnailCell.thumbnailContainerView.layer.masksToBounds = false
+        thumbnailCell.thumbnailContainerView.layer.shadowColor = UIColor.black.cgColor
+        thumbnailCell.thumbnailContainerView.layer.shadowOpacity = 0.5
+        thumbnailCell.thumbnailContainerView.layer.shadowOffset = CGSize(width: -0.5, height: 0.5)
+        thumbnailCell.thumbnailContainerView.layer.shadowRadius = 1
+        
+        thumbnailCell.thumbnailContainerView.layer.shadowPath = UIBezierPath(rect: thumbnailCell.thumbnailContainerView.bounds).cgPath
+        thumbnailCell.thumbnailContainerView.layer.shouldRasterize = true
+        
         // Get flickr image data
         let cellFlickrImageData = try! flickrResultsPages!.getFLickrImageData(indexPath.row)
         
         if cellFlickrImageData != nil {
             
-            setThumbnailCellImageView(thumbnailCell: thumbnailCell, flickrImageData: cellFlickrImageData!)
+            setThumbnail(thumbnailCell: thumbnailCell, flickrImageData: cellFlickrImageData!)
             
         } else {
             // Results page must be downloaded urgently
@@ -80,7 +90,7 @@ class GalleryCollectionViewController: UICollectionViewController {
                         self.flickrService.pendingPageDownloads[resultsPageNumber] = false
                         
                         // Ok results are there next set thumbnail cell
-                        self.setThumbnailCellImageView(thumbnailCell: thumbnailCell, flickrImageData: try!flickrResultsPages.getFLickrImageData(indexPath.row)!)
+                        self.setThumbnail(thumbnailCell: thumbnailCell, flickrImageData: try!flickrResultsPages.getFLickrImageData(indexPath.row)!)
                     }
                 }
             } else {
@@ -91,7 +101,7 @@ class GalleryCollectionViewController: UICollectionViewController {
                     // Ok results are there next set thumbnail cell
                     if try! flickrResultsPages.getFLickrImageData(indexPath.row) != nil {
                      
-                        self.setThumbnailCellImageView(thumbnailCell: thumbnailCell, flickrImageData: try! flickrResultsPages.getFLickrImageData(indexPath.row)!)
+                        self.setThumbnail(thumbnailCell: thumbnailCell, flickrImageData: try! flickrResultsPages.getFLickrImageData(indexPath.row)!)
                         
                     }
                 }
@@ -103,7 +113,10 @@ class GalleryCollectionViewController: UICollectionViewController {
         return thumbnailCell
     }
     
-    func setThumbnailCellImageView(thumbnailCell: ThumbnailCollectionViewCell, flickrImageData: FlickrImageData) {
+    func setThumbnail(thumbnailCell: ThumbnailCollectionViewCell, flickrImageData: FlickrImageData) {
+        
+        thumbnailCell.thumbnailTitleLabel.text = flickrImageData.imageTitle
+        
         // Build image URL
         let imageUrl = flickrImageData.getFlickrImageUrl(imageSize: "t", imageFormat: "jpg")
         
