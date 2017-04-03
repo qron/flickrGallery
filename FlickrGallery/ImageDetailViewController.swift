@@ -1,6 +1,8 @@
 import UIKit
 
 class ImageDetailViewController: UIViewController {
+    
+    let flickrService: FlickrService = FlickrService.sharedInstance
 
     @IBOutlet weak var detailImageView: UIImageView!
     
@@ -9,8 +11,7 @@ class ImageDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //FlickrService.getInstance().getImageFromFlickrImageUrl((flickerImageData?.getFlickrOriginalImageUrl())!) {
-        FlickrService.getInstance().getImageFromFlickrImageUrl((flickerImageData?.getFlickrImageUrl(imageSize: "c", imageFormat: "jpg"))!) {
+        flickrService.getImageFromFlickrImageUrl((flickerImageData?.getFlickrImageUrl(imageSize: "c", imageFormat: "jpg"))!) {
 
             (rawImage) in
             //self.detailImageView.image = UIImage(data: rawImage)

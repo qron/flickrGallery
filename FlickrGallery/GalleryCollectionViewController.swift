@@ -6,6 +6,7 @@ class GalleryCollectionViewController: UICollectionViewController {
     
     var tags : [String]?
     let resultsPerPages = 100
+    let flickrService: FlickrService = FlickrService.sharedInstance
     
     var flickrResultsPages: FlickrResultsPages?
 
@@ -13,7 +14,7 @@ class GalleryCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         self.navigationItem.title = self.tags!.joined(separator: ", ") + " (Calculating...)"
         
-        FlickrService.getInstance().getFlickrResultsByTagsPage(tags!, 1, resultsPerPages) {
+        flickrService.getFlickrResultsByTagsPage(tags!, 1, resultsPerPages) {
             (flickrResultsPages) in
             
             self.flickrResultsPages = flickrResultsPages
@@ -62,21 +63,21 @@ class GalleryCollectionViewController: UICollectionViewController {
             let resultsPageNumber = ((indexPath.row - (indexPath.row % resultsPerPages)) / resultsPerPages) + 1
             
             // Check if page download is pending
-            if FlickrService.getInstance().isPageDownloadPending(page: resultsPageNumber) {
-                FlickrService.getInstance().onPageDownloadComplete(page: resultsPageNumber) {
+            if flickrService.isPageDownloadPending(page: resultsPageNumber) {
+                flickrService.onPageDownloadComplete(page: resultsPageNumber) {
                     () in
-                    FlickrService.getInstance().getFlickrResultsByTagsPage(self.tags!, resultsPageNumber, self.resultsPerPages) {
+                    self.flickrService.getFlickrResultsByTagsPage(self.tags!, resultsPageNumber, self.resultsPerPages) {
                         (flickrResultsPages) in
                         self.flickrResultsPages?.concatenateResults(flickrResultsPages: flickrResultsPages)
                         
                         // TO CHANGE BECAUSE IT IS HORRIBLE: launch cached completion handler
-                        if FlickrService.getInstance().completionHandlers[resultsPageNumber] != nil {
-                            for completionHandler in FlickrService.getInstance().completionHandlers[resultsPageNumber]! {
+                        if self.flickrService.completionHandlers[resultsPageNumber] != nil {
+                            for completionHandler in self.flickrService.completionHandlers[resultsPageNumber]! {
                                 completionHandler()
                             }
-                            FlickrService.getInstance().completionHandlers[resultsPageNumber] = nil
+                            self.flickrService.completionHandlers[resultsPageNumber] = nil
                         }
-                        FlickrService.getInstance().pendingPageDownloads[resultsPageNumber] = false
+                        self.flickrService.pendingPageDownloads[resultsPageNumber] = false
                         
                         // Ok results are there next set thumbnail cell
                         self.setThumbnailCellImageView(thumbnailCell: thumbnailCell, flickrImageData: try!flickrResultsPages.getFLickrImageData(indexPath.row)!)
@@ -84,7 +85,7 @@ class GalleryCollectionViewController: UICollectionViewController {
                 }
             } else {
              
-                FlickrService.getInstance().getFlickrResultsByTagsPage(tags!, resultsPageNumber, resultsPerPages) {
+                flickrService.getFlickrResultsByTagsPage(tags!, resultsPageNumber, resultsPerPages) {
                     (flickrResultsPages) in
                     self.flickrResultsPages?.concatenateResults(flickrResultsPages: flickrResultsPages)
                     // Ok results are there next set thumbnail cell
@@ -107,7 +108,7 @@ class GalleryCollectionViewController: UICollectionViewController {
         let imageUrl = flickrImageData.getFlickrImageUrl(imageSize: "t", imageFormat: "jpg")
         
         // Download image
-        FlickrService.getInstance().getImageFromFlickrImageUrl(imageUrl){
+        flickrService.getImageFromFlickrImageUrl(imageUrl){
             (rawImage) in
             DispatchQueue.main.async {
                 thumbnailCell.thumbnailImageView.image = UIImage(data: rawImage)

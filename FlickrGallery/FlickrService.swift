@@ -21,11 +21,6 @@ class FlickrService {
         flickrResultsByTagsPageUrlPattern = config["Flickr URL pattern"] as! String
     }
     
-    // Instance getter
-    static func getInstance() -> FlickrService {
-        return FlickrService.sharedInstance
-    }
-    
     let apiKey: String
     let responseFormat: String
     let flickrResultsByTagsPageUrlPattern: String
