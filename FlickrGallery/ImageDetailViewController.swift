@@ -11,6 +11,8 @@ class ImageDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = flickerImageData?.imageTitle
+        
         flickrService.getImageFromFlickrImageUrl((flickerImageData?.getFlickrImageUrl(imageSize: "c", imageFormat: "jpg"))!) {
 
             (rawImage) in
