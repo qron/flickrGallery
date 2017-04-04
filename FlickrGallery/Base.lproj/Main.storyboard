@@ -54,12 +54,11 @@
                             </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xud-7I-mbf">
                                 <rect key="frame" x="20" y="134" width="374" height="582"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="G7D-dH-V1n" firstAttribute="centerX" secondItem="meH-d9-eFL" secondAttribute="centerX" id="0sn-H6-l69"/>
                             <constraint firstItem="Xud-7I-mbf" firstAttribute="leading" secondItem="meH-d9-eFL" secondAttribute="leadingMargin" id="EFD-eh-PZf"/>
@@ -103,26 +102,26 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="3tA-SV-wSC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZOT-xh-Akp">
-                            <size key="itemSize" width="170" height="200"/>
+                            <size key="itemSize" width="200" height="230"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="thumbnailCell" id="CRa-Qk-J3j" customClass="ThumbnailCollectionViewCell" customModule="FlickrGallery" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="170" height="200"/>
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="230"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="170" height="200"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="230"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dtP-Rg-DoN">
-                                            <rect key="frame" x="5" y="5" width="160" height="190"/>
+                                            <rect key="frame" x="20.666666666666671" y="20" width="160" height="190"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xCT-mE-iVn">
-                                                    <rect key="frame" x="5.6666666666666714" y="5" width="150" height="150"/>
+                                                    <rect key="frame" x="5.6666666666666572" y="5" width="150" height="150"/>
                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2q-JX-pvG">
@@ -145,14 +144,13 @@
                                         </view>
                                     </subviews>
                                 </view>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="dtP-Rg-DoN" firstAttribute="width" secondItem="CRa-Qk-J3j" secondAttribute="width" constant="-10" id="Fyz-wZ-jYm"/>
+                                    <constraint firstItem="dtP-Rg-DoN" firstAttribute="width" secondItem="CRa-Qk-J3j" secondAttribute="width" constant="-40" id="Fyz-wZ-jYm"/>
                                     <constraint firstItem="dtP-Rg-DoN" firstAttribute="centerX" secondItem="CRa-Qk-J3j" secondAttribute="centerX" id="H2d-0U-8Go"/>
-                                    <constraint firstItem="dtP-Rg-DoN" firstAttribute="height" secondItem="CRa-Qk-J3j" secondAttribute="height" constant="-10" id="jrP-Kg-rAs"/>
+                                    <constraint firstItem="dtP-Rg-DoN" firstAttribute="height" secondItem="CRa-Qk-J3j" secondAttribute="height" constant="-40" id="jrP-Kg-rAs"/>
                                     <constraint firstItem="dtP-Rg-DoN" firstAttribute="centerY" secondItem="CRa-Qk-J3j" secondAttribute="centerY" id="wQr-p1-Jsx"/>
                                 </constraints>
-                                <size key="customSize" width="170" height="200"/>
+                                <size key="customSize" width="200" height="230"/>
                                 <connections>
                                     <outlet property="thumbnailContainerView" destination="dtP-Rg-DoN" id="JWp-uN-YSm"/>
                                     <outlet property="thumbnailImageView" destination="xCT-mE-iVn" id="hqN-he-R0O"/>
@@ -188,7 +186,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="lKp-wF-x6m" firstAttribute="width" secondItem="agB-I4-1WX" secondAttribute="width" id="M3d-q1-lNa"/>
                             <constraint firstItem="lKp-wF-x6m" firstAttribute="centerX" secondItem="agB-I4-1WX" secondAttribute="centerX" id="bSj-4d-LQD"/>
