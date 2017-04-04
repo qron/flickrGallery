@@ -118,7 +118,7 @@ class GalleryCollectionViewController: UICollectionViewController {
         thumbnailCell.thumbnailTitleLabel.text = flickrImageData.imageTitle
         
         // Build image URL
-        let imageUrl = flickrImageData.getFlickrImageUrl(imageSize: "t", imageFormat: "jpg")
+        let imageUrl = flickrImageData.getFlickrImageUrl(imageSize: "q", imageFormat: "jpg")
         
         // Download image
         flickrService.getImageFromFlickrImageUrl(imageUrl){
