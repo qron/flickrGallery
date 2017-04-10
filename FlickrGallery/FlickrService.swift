@@ -34,6 +34,9 @@ class FlickrService {
     let downloadPrioritizedResultsListQueue = DispatchQueue(label: "com.FlickrGallery.httpRequestQueue.getPrioritizedFlickrResultsByTagsPage", qos: .userInitiated)
     let downloadImageQueue = DispatchQueue(label: "com.FlickrGallery.httpRequestQueue.getImage", qos: .background)
     
+    // Tasks container
+    var tasks: [String: URLSessionDataTask] = [:]
+    
     // Cached images container
     var cache: ImagesCache = ImagesCache.getInstance()
     
@@ -53,11 +56,19 @@ class FlickrService {
         }
     }
     
+    private func urlifyTags(tag: String) -> String {
+        var formatedTag: String
+        
+        formatedTag = tag.replacingOccurrences(of: " ", with: "+")
+        
+        return formatedTag
+    }
+    
     // Download flickr results by tags page
     func getFlickrResultsByTagsPage(_ imagesTags: [String], _ page: Int, _ resultsPerPages: Int, _ resultsHandler: @escaping (_ flickrResultsPages: FlickrResultsPages) -> Void) {
         
         // Prepare tags list
-        let tagsParameters = imagesTags.joined(separator: ",")
+        let tagsParameters = imagesTags.map({urlifyTags(tag: $0)}).joined(separator: ",")
         
         // Prepare URL
         let flickrResultsByTagsPageUrl =  String(format: flickrResultsByTagsPageUrlPattern, apiKey, tagsParameters, page, resultsPerPages, responseFormat)
@@ -153,10 +164,19 @@ class FlickrService {
                     
                 }
                 
+                self.tasks[flickrImageUrl] = task
+                
                 task.resume()
             }
         }
         
+    }
+    
+    func cancelPendingTask(taskUrl: String) {
+        if tasks[taskUrl] != nil {
+            tasks[taskUrl]?.cancel()
+        }
+        cache.cancelPendingDownload(imageKey: taskUrl)
     }
     
 }

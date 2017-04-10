@@ -1,11 +1,12 @@
 import UIKit
+import CoreImage
 
 private let reuseIdentifier = "thumbnailCell"
 
 class GalleryCollectionViewController: UICollectionViewController {
     
     var tags : [String]?
-    let resultsPerPages = 100
+    let resultsPerPages = 500
     let flickrService: FlickrService = FlickrService.sharedInstance
     
     var flickrResultsPages: FlickrResultsPages?
@@ -48,20 +49,9 @@ class GalleryCollectionViewController: UICollectionViewController {
         
         let thumbnailCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ThumbnailCollectionViewCell
         
-        // Thumbnail cell settings
-        
-        // Thumbnail shadow
-        thumbnailCell.thumbnailContainerView.layer.masksToBounds = false
-        thumbnailCell.thumbnailContainerView.layer.shadowColor = UIColor.black.cgColor
-        thumbnailCell.thumbnailContainerView.layer.shadowOpacity = 0.5
-        thumbnailCell.thumbnailContainerView.layer.shadowOffset = CGSize(width: -0.5, height: 0.5)
-        thumbnailCell.thumbnailContainerView.layer.shadowRadius = 1
-        
-        thumbnailCell.thumbnailContainerView.layer.shadowPath = UIBezierPath(rect: thumbnailCell.thumbnailContainerView.bounds).cgPath
-        thumbnailCell.thumbnailContainerView.layer.shouldRasterize = true
         
         // Get flickr image data
-        let cellFlickrImageData = try! flickrResultsPages!.getFLickrImageData(indexPath.row)
+        let cellFlickrImageData = try! flickrResultsPages!.getFlickrImageData(indexPath.row)
         
         if cellFlickrImageData != nil {
             
@@ -90,7 +80,7 @@ class GalleryCollectionViewController: UICollectionViewController {
                         self.flickrService.pendingPageDownloads[resultsPageNumber] = false
                         
                         // Ok results are there next set thumbnail cell
-                        self.setThumbnail(thumbnailCell: thumbnailCell, flickrImageData: try!flickrResultsPages.getFLickrImageData(indexPath.row)!)
+                        self.setThumbnail(thumbnailCell: thumbnailCell, flickrImageData: try!flickrResultsPages.getFlickrImageData(indexPath.row)!)
                     }
                 }
             } else {
@@ -99,9 +89,9 @@ class GalleryCollectionViewController: UICollectionViewController {
                     (flickrResultsPages) in
                     self.flickrResultsPages?.concatenateResults(flickrResultsPages: flickrResultsPages)
                     // Ok results are there next set thumbnail cell
-                    if try! flickrResultsPages.getFLickrImageData(indexPath.row) != nil {
+                    if try! flickrResultsPages.getFlickrImageData(indexPath.row) != nil {
                      
-                        self.setThumbnail(thumbnailCell: thumbnailCell, flickrImageData: try! flickrResultsPages.getFLickrImageData(indexPath.row)!)
+                        self.setThumbnail(thumbnailCell: thumbnailCell, flickrImageData: try! flickrResultsPages.getFlickrImageData(indexPath.row)!)
                         
                     }
                 }
@@ -115,17 +105,26 @@ class GalleryCollectionViewController: UICollectionViewController {
     
     func setThumbnail(thumbnailCell: ThumbnailCollectionViewCell, flickrImageData: FlickrImageData) {
         
-        thumbnailCell.thumbnailTitleLabel.text = flickrImageData.imageTitle
+        // Thumbnail cell settings
         
+        thumbnailCell.thumbnailTitleLabel.text = flickrImageData.title
+
         // Build image URL
-        let imageUrl = flickrImageData.getFlickrImageUrl(imageSize: "q", imageFormat: "jpg")
+        let imageUrl = flickrImageData.getFlickrImageUrl(imageSize: "s", imageFormat: "jpg")
         
+        if thumbnailCell.cellImageUrl == nil {
+            thumbnailCell.cellImageUrl = imageUrl
+        } else {
+            if thumbnailCell.cellImageUrl != imageUrl {
+                flickrService.cancelPendingTask(taskUrl: thumbnailCell.cellImageUrl!)
+                thumbnailCell.cellImageUrl = imageUrl
+                thumbnailCell.thumbnailImageView.image = nil
+            }
+        }
         // Download image
         flickrService.getImageFromFlickrImageUrl(imageUrl){
             (rawImage) in
-            DispatchQueue.main.async {
-                thumbnailCell.thumbnailImageView.image = UIImage(data: rawImage)
-            }
+                thumbnailCell.setImage(rawImage: rawImage)
         }
     }
     
@@ -137,7 +136,7 @@ class GalleryCollectionViewController: UICollectionViewController {
             
             let thumbnailCollectionViewCell = sender as! ThumbnailCollectionViewCell
             
-            imageDetailViewController.flickerImageData = try!flickrResultsPages?.getFLickrImageData((collectionView?.indexPath(for: thumbnailCollectionViewCell)?.row)!)
+            imageDetailViewController.flickrImageData = try!flickrResultsPages?.getFlickrImageData((collectionView?.indexPath(for: thumbnailCollectionViewCell)?.row)!)
             
         }
     

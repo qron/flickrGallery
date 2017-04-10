@@ -36,7 +36,7 @@ class ImagesCache {
             }
             completionHandlers[imageKey] = nil
         }
-        pending[imageKey] = false
+        pending[imageKey] = nil
     }
     
     func onDownloadComplete(imageKey: String, _ completionHandler: @escaping (_ imageData: Data) -> Void) {
@@ -53,6 +53,15 @@ class ImagesCache {
     
     func getCachedImage(imageKey: String) -> Data {
         return cached[imageKey]!
+    }
+    
+    func cancelPendingDownload(imageKey: String) {
+        if hasPendingDownload(imageKey: imageKey) {
+            pending[imageKey] = nil
+            if completionHandlers[imageKey] != nil {
+                completionHandlers[imageKey] = nil
+            }
+        }
     }
     
 }

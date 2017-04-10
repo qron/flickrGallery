@@ -20,7 +20,7 @@ class FlickrResultsPages {
         var rawList = rawPage["photo"] as! [[String: Any]]
         
         for i in 0 ..< rawList.count {
-            flickrImageDataList[((currentPage - 1) * resultsPerPage) + i] = FlickrImageData(rawList[i])
+            flickrImageDataList[((currentPage - 1) * resultsPerPage) + i] = DownloadedFlickrImageData(rawList[i])
         }
 
     }
@@ -29,7 +29,7 @@ class FlickrResultsPages {
         return flickrImageDataList.count
     }
     
-    func getFLickrImageData(_ index: Int) throws -> FlickrImageData? {
+    func getFlickrImageData(_ index: Int) throws -> FlickrImageData? {
 
         if index + 1 > totalFlickrImage {
             throw FlickrServiceError.resultsListIndexOutOfRange(index: index)
@@ -39,8 +39,8 @@ class FlickrResultsPages {
     }
 
     func concatenateResults(flickrResultsPages: FlickrResultsPages) {
-        pagesNumber = flickrResultsPages.pagesNumber
-        totalFlickrImage = flickrResultsPages.totalFlickrImage
+        //pagesNumber = flickrResultsPages.pagesNumber
+        //totalFlickrImage = flickrResultsPages.totalFlickrImage
         
         for(index, flickrImageData) in flickrResultsPages.flickrImageDataList {
             self.flickrImageDataList[index] = flickrImageData
