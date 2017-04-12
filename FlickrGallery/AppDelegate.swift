@@ -20,6 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         initFavoritesDirectories()
         
+        // Set bars appearance
+        let navigationBarAppearance = UINavigationBar.appearance()
+        navigationBarAppearance.barTintColor = UIColor.white
+        
+        let tabBarAppearance = UITabBar.appearance()
+        tabBarAppearance.barTintColor = UIColor.white
+        
         return true
     }
 
