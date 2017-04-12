@@ -5,8 +5,6 @@ private let reuseIdentifier = "thumbnailCell"
 
 class FavoritesGalleryCollectionViewController: UICollectionViewController {
     
-    var i = 0
-    
     let flickrService: FlickrService = FlickrService.sharedInstance
     
     let favoritesRepository = FavoritesRepository()

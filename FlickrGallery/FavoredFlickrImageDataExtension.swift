@@ -11,6 +11,8 @@ extension FavoredFlickrImageData: FlickrImageData {
         secret = flickrImageData.secret
         server = flickrImageData.server
         farm = flickrImageData.farm
+        latitude = flickrImageData.latitude
+        longitude = flickrImageData.longitude
         
     }
     
@@ -21,7 +23,7 @@ extension FavoredFlickrImageData: FlickrImageData {
     }
     
     func clone() -> FlickrImageData {
-        return DownloadedFlickrImageData(title: title, id: id, secret: secret, server: server, farm: farm)
+        return DownloadedFlickrImageData(title: title, id: id, secret: secret, server: server, farm: farm, latitude: latitude, longitude: longitude)
     }
 
 }

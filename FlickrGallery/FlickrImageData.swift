@@ -9,6 +9,9 @@ protocol FlickrImageData {
     var server: String { get }
     var farm: String { get }
     
+    var latitude: Double { get }
+    var longitude: Double { get }
+    
     func getFlickrImageUrl(imageSize: String, imageFormat: String) -> String
     
 }

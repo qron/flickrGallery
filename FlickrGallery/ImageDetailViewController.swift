@@ -46,6 +46,13 @@ class ImageDetailViewController: UIViewController {
             
         }
         
+        flickrService.getImageFromFlickrImageUrl((flickrImageData?.getFlickrImageUrl(imageSize: "s", imageFormat: "jpg"))!) {
+            
+            (rawImage) in
+            self.fileService.writeFile(fileName: (self.flickrImageData?.id)!, content: rawImage, directoryName: "favorites-annotations")
+            
+        }
+        
     }
     
     func removeFavorite(favoredFlickrImageData: FlickrImageData?) {
@@ -60,6 +67,7 @@ class ImageDetailViewController: UIViewController {
         // Remove image files from documents
         fileService.removeFile(fileName: (favoredFlickrImageData?.id)!, directoryName: "favorites-thumbnails")
         fileService.removeFile(fileName: (favoredFlickrImageData?.id)!, directoryName: "favorites-details")
+        fileService.removeFile(fileName: (favoredFlickrImageData?.id)!, directoryName: "favorites-annotations")
     }
     
     func refreshIsFavoredLabelTextColor(favored: Bool) {

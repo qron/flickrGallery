@@ -49,6 +49,8 @@ class GalleryCollectionViewController: UICollectionViewController {
         
         let thumbnailCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ThumbnailCollectionViewCell
         
+        thumbnailCell.thumbnailImageView.image = nil
+        
         
         // Get flickr image data
         let cellFlickrImageData = try! flickrResultsPages!.getFlickrImageData(indexPath.row)
@@ -94,13 +96,15 @@ class GalleryCollectionViewController: UICollectionViewController {
                         self.setThumbnail(thumbnailCell: thumbnailCell, flickrImageData: try! flickrResultsPages.getFlickrImageData(indexPath.row)!)
                         
                     }
+                    
                 }
                 
             }
             
         }
-    
+        
         return thumbnailCell
+        
     }
     
     func setThumbnail(thumbnailCell: ThumbnailCollectionViewCell, flickrImageData: FlickrImageData) {
@@ -108,6 +112,13 @@ class GalleryCollectionViewController: UICollectionViewController {
         // Thumbnail cell settings
         
         thumbnailCell.thumbnailTitleLabel.text = flickrImageData.title
+        
+        // Display localized label
+        if flickrImageData.latitude != 999 && flickrImageData.longitude != 999 {
+            thumbnailCell.localizedLabel.text = "◥"
+        } else {
+            thumbnailCell.localizedLabel.text = ""
+        }
 
         // Build image URL
         let imageUrl = flickrImageData.getFlickrImageUrl(imageSize: "s", imageFormat: "jpg")

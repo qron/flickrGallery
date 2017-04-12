@@ -3,11 +3,13 @@
     <entity name="FavoredFlickrImageData" representedClassName="FavoredFlickrImageData" syncable="YES">
         <attribute name="farm" attributeType="String" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="secret" attributeType="String" syncable="YES"/>
         <attribute name="server" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="FavoredFlickrImageData" positionX="-36" positionY="9" width="128" height="120"/>
+        <element name="FavoredFlickrImageData" positionX="-36" positionY="9" width="128" height="150"/>
     </elements>
 </model>

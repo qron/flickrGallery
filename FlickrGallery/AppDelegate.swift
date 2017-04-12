@@ -96,12 +96,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let favoritesThumbnailsDirectoryName = "favorites-thumbnails"
         let favoritesDetailsDirectoryName = "favorites-details"
+        let favoritesAnnotationsDirectoryName = "favorites-annotations"
         
         
         if let documentDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             
             let favoritesThumbnailsDirectoryPath = documentDirectoryUrl.appendingPathComponent(favoritesThumbnailsDirectoryName)
             let favoritesDetailsDirectoryPath = documentDirectoryUrl.appendingPathComponent(favoritesDetailsDirectoryName)
+            let favoritesAnnotationsDirectoryPath = documentDirectoryUrl.appendingPathComponent(favoritesAnnotationsDirectoryName)
             
             if FileManager.default.fileExists(atPath: favoritesThumbnailsDirectoryPath.path) == false {
                 
@@ -122,6 +124,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 
             }
+            
+            if FileManager.default.fileExists(atPath: favoritesAnnotationsDirectoryPath.path) {
+                
+                do {
+                    try FileManager.default.createDirectory(atPath: favoritesAnnotationsDirectoryPath.path, withIntermediateDirectories: false, attributes: nil)
+                } catch {
+                    fatalError("Cannot create favorites annotations directory in file system")
+                }
+                
+            }
+            
         }
         
     }

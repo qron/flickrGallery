@@ -2,34 +2,33 @@ import Foundation
 
 class DownloadedFlickrImageData: FlickrImageData {
     
+    let flickrService = FlickrService.sharedInstance
+    
     static let flickrImageUrlPattern = "https://farm%@.staticflickr.com/%@/%@_%@_%@.%@"
     let title: String
     let id: String
     let secret: String
     let server: String
     let farm: String
-
-    init(_ rawData: Dictionary<String, Any>) {
-
-        self.title = rawData["title"] as! String
-        self.id = rawData["id"] as! String
-        self.secret = rawData["secret"] as! String
-        self.server = rawData["server"] as! String
-        self.farm = "\(rawData["farm"] as! Int)"
-    }
     
-    init(title: String, id: String, secret: String, server: String, farm: String) {
+    var latitude: Double
+    var longitude: Double
+    
+    init(title: String, id: String, secret: String, server: String, farm: String, latitude: Double, longitude: Double) {
        
         self.title = title
         self.id = id
         self.secret = secret
         self.server = server
         self.farm = farm
+        
+        self.latitude = latitude
+        self.longitude = longitude
     
     }
     
     func getFlickrImageUrl(imageSize: String, imageFormat: String) -> String {
-        
+    
         return String(format: DownloadedFlickrImageData.flickrImageUrlPattern, farm, server, id, secret, imageSize, imageFormat)
     
     }

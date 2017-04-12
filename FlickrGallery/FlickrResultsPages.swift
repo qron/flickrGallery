@@ -7,22 +7,13 @@ class FlickrResultsPages {
     
     var flickrImageDataList: [Int: FlickrImageData] = [:]
     
-    init(rawResult: [String: Any]) {
+    init(currentPage: Int, resultsPerPage: Int, pagesNumber: Int, totalFlickrImages: Int, flickrImageDataList: [Int: FlickrImageData]) {
+        self.pagesNumber = pagesNumber
+        self.totalFlickrImage = totalFlickrImages
         
-        let rawPage = rawResult["photos"] as! [String: Any]
-        
-        let currentPage = rawPage["page"] as! Int
-        let resultsPerPage = rawPage["perpage"] as! Int
-        
-        self.pagesNumber = rawPage["pages"] as! Int
-        self.totalFlickrImage = Int(rawPage["total"] as! String)!
-        
-        var rawList = rawPage["photo"] as! [[String: Any]]
-        
-        for i in 0 ..< rawList.count {
-            flickrImageDataList[((currentPage - 1) * resultsPerPage) + i] = DownloadedFlickrImageData(rawList[i])
+        for i in 0 ..< flickrImageDataList.count {
+            self.flickrImageDataList[((currentPage - 1) * resultsPerPage) + i] = flickrImageDataList[i]
         }
-
     }
     
     func getFlickrImageDataListCount() -> Int {

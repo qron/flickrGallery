@@ -2,7 +2,7 @@
 //  FavoredFlickrImageData+CoreDataProperties.swift
 //  FlickrGallery
 //
-//  Created by Qron on 06/04/2017.
+//  Created by Qron on 11/04/2017.
 //  Copyright © 2017 qron. All rights reserved.
 //
 
@@ -21,5 +21,7 @@ extension FavoredFlickrImageData {
     @NSManaged public var secret: String
     @NSManaged public var server: String
     @NSManaged public var title: String
+    @NSManaged public var latitude: Double
+    @NSManaged public var longitude: Double
 
 }

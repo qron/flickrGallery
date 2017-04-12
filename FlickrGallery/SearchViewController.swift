@@ -10,6 +10,10 @@ class SearchViewController: UIViewController {
     
     var tags: [String] = []
     
+    @IBAction func onTapGesture(_ sender: UITapGestureRecognizer) {
+        tagTextField.resignFirstResponder()
+    }
+    
     @IBAction func onAddButtonTapAction(_ sender: Any) {
         
         if (tagTextField.text?.isEmpty) != true {
@@ -27,6 +31,8 @@ class SearchViewController: UIViewController {
             removeTagsBarButtonItem.isEnabled = true
             
         }
+        
+        tagTextField.resignFirstResponder()
     }
     
     @IBAction func onRemoveTagsTapAction(_ sender: Any) {

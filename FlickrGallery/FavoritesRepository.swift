@@ -26,6 +26,7 @@ class FavoritesRepository {
             if isFavored == true {
                 completionHandler((favoredFlickrImageData as! FavoredFlickrImageData).clone())
                 self.coreDataHelper.remove(entityInstance: favoredFlickrImageData as! FavoredFlickrImageData)
+                self.coreDataHelper.save()
             } else {
                 completionHandler(flickrImageData)
             }
